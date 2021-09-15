@@ -43,8 +43,13 @@ function HomeComponent(props) {
                 .then((response) => {
                     setUser(response);
                     //TODO: send only JSON data, handle it separately in the Server code
+                    let objectToSend = {
+                        type: "newClient",
+                        clientId: response._id
+                    };
+                    console.log(objectToSend);
                     if(webSocketClient.current.readyState === 1)
-                        webSocketClient.current.send(response._id);
+                        webSocketClient.current.send(JSON.stringify(objectToSend));
                 });
         }
     }, [props]);
