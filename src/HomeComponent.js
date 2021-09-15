@@ -19,7 +19,7 @@ function HomeComponent(props) {
     const [contactsListVisible, setContactsListVisible] = useState(false);
     let webSocketClient = useRef(null);
     //const wsURL = 'ws://localhost:9000';
-    const wsURL = 'wss://websocket-server.azurewebsites.net';
+    const wsURL = 'wss://websocket-server-1.azurewebsites.net';
     useEffect(()=>{
         webSocketClient.current = new WebSocket(wsURL);
         webSocketClient.current.onopen =  (event) => {
