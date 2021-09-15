@@ -48,8 +48,13 @@ function HomeComponent(props) {
                         clientId: response._id
                     };
                     console.log(objectToSend);
-                    //if(webSocketClient.current.readyState === 1)
-                    webSocketClient.current.send(JSON.stringify(objectToSend));
+                    if(webSocketClient.current.readyState === 1)
+                        webSocketClient.current.send(JSON.stringify(objectToSend));
+                    else{
+                        webSocketClient.current.onopen = (event) => {
+                            webSocketClient.current.send(JSON.stringify(objectToSend));
+                        };
+                    }
                 });
         }
     }, [props]);
