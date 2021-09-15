@@ -2,11 +2,18 @@ import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 
 const Contact = (props) => {
-    //console.log(props);
+    let ongoingConvoExists = false;
+    props.convoList.some((conversation) => {
+        if(conversation.participants.includes(props.id)){
+            ongoingConvoExists = true;
+            return true;
+        }
+        return false;  
+    });
     const [contactName, setContactName] = useState('');
     const [lastSeenTime, setLastSeenTime] = useState('');
     useEffect(()=>{
-        fetch(`http://localhost:3001/users/${props.id}`)
+        fetch(`https://messaging-app-server.azurewebsites.net/users/${props.id}`)
                 .then((response) => response.json())
                 .then(response => {
                     setContactName(response.FullName);
@@ -21,7 +28,7 @@ const Contact = (props) => {
                 participant: [props.id, props.user._id]
               })
           };
-          fetch(`http://localhost:3001/conversation`, requestOptions)
+          fetch(`https://messaging-app-server.azurewebsites.net/conversation`, requestOptions)
                 .then((response) => response.json())
                 .then(response => response.insertedId)
                 .then(response => {
@@ -29,7 +36,7 @@ const Contact = (props) => {
                     props.reloadConversationSummary();
                 });
     }
-    return (
+    return ( !ongoingConvoExists &&
     <Card style={{cursor: 'pointer'}} bg="light" text="dark" onClick={createConversation}>
         <Card.Title>{contactName}</Card.Title>
     </Card>

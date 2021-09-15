@@ -9,7 +9,7 @@ function ConversationSummary(props) {
     
     useEffect(() => {
         if(recepientsList != null && recepientsList.length === 1){
-            fetch(`http://localhost:3001/users/${recepientsList[0]}`)
+            fetch(`https://messaging-app-server.azurewebsites.net/users/${recepientsList[0]}`)
                 .then((response) => response.json())
                 .then(response => {
                     setConversationName(response.FullName);
@@ -23,7 +23,7 @@ function ConversationSummary(props) {
     }, [recepientsList]);
     useEffect(() => {
         if(typeof props.lastMessageId !== "undefined"){
-            fetch(`http://localhost:3001/messages/id/${props.lastMessageId}`)
+            fetch(`https://messaging-app-server.azurewebsites.net/messages/id/${props.lastMessageId}`)
             .then((response) => response.json())
             .then(response => response.messageContent)
             .then(setLastMessage);
@@ -33,7 +33,7 @@ function ConversationSummary(props) {
     useEffect(() => {
         if(props.newNotification.conversationId === props.conversationId 
             && props.newNotification.messageId !== props.lastMessageId){
-            fetch(`http://localhost:3001/messages/id/${props.newNotification.messageId}`)
+            fetch(`https://messaging-app-server.azurewebsites.net/messages/id/${props.newNotification.messageId}`)
             .then((response) => response.json())
             .then(response => response.messageContent)
             .then(setLastMessage);
@@ -43,7 +43,7 @@ function ConversationSummary(props) {
     useEffect(() => {
         if(props.newMessage.conversationId === props.conversationId 
             && props.newMessage._id !== props.lastMessageId){
-            fetch(`http://localhost:3001/messages/id/${props.newMessage._id}`)
+            fetch(`https://messaging-app-server.azurewebsites.net/messages/id/${props.newMessage._id}`)
             .then((response) => response.json())
             .then(response => response.messageContent)
             .then(setLastMessage);

@@ -18,7 +18,7 @@ function AddMessage(props) {
           messageTime: new Date()
         })
     };
-      fetch('http://localhost:3001/message', requestOptions)
+      fetch('https://messaging-app-server.azurewebsites.net/message', requestOptions)
       .then(response => response.json())
       .then((response) => {
         //console.log("response of insert message: "+JSON.stringify(response));

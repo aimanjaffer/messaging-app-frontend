@@ -18,7 +18,8 @@ function HomeComponent(props) {
     const [newMessage, setNewMessage] = useState({});
     const [contactsListVisible, setContactsListVisible] = useState(false);
     let webSocketClient = useRef(null);
-    const wsURL = 'ws://localhost:8080';
+    //const wsURL = 'ws://localhost:9000';
+    const wsURL = 'wss://websocket-server.azurewebsites.net';
     useEffect(()=>{
         webSocketClient.current = new WebSocket(wsURL);
         webSocketClient.current.onopen =  (event) => {
@@ -37,7 +38,7 @@ function HomeComponent(props) {
     //Get User by userName
     useEffect(() => {
         if(props.loggedInUser !== null && props.loggedInUser !== undefined && props.loggedInUser !== ''){
-            fetch(`http://localhost:3001/users/name/${props.loggedInUser}`)
+            fetch(`https://messaging-app-server.azurewebsites.net/users/name/${props.loggedInUser}`)
                 .then((response) => response.json())
                 .then((response) => {
                     setUser(response);
@@ -52,7 +53,7 @@ function HomeComponent(props) {
         if(!contactsListVisible && user !== null && (typeof user !== "undefined") && Object.entries(user).length !== 0 ){
             //console.log(user);
             //console.log(user._id);
-            fetch(`http://localhost:3001/summaries/${user._id}`)
+            fetch(`https://messaging-app-server.azurewebsites.net/summaries/${user._id}`)
                 .then((response) => response.json())
                 .then(setConversationSummaryList);
         }
@@ -60,7 +61,7 @@ function HomeComponent(props) {
     // Load a particular conversation when it's respective conversationSummary is clicked
     useEffect(() => {
         if(conversationId !== 0){
-            fetch(`http://localhost:3001/conversations/${conversationId}`)
+            fetch(`https://messaging-app-server.azurewebsites.net/conversations/${conversationId}`)
                 .then((response) => response.json())
                 .then(setConversation);
         }
@@ -101,6 +102,7 @@ function HomeComponent(props) {
         {contactsListVisible ? (<>
         <Row><Button variant="secondary" onClick={back}>Back</Button></Row>
         <Row><ContactsList user={user}
+        convoList={conversationSummaryList}
         callbackOnClickConversation={loadConversation}
         reloadConversationSummary={back}/></Row>
         </>) : 

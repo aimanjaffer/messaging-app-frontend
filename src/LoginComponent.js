@@ -15,7 +15,7 @@ function LoginComponent(props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userName: userName})
       };
-      fetch('http://localhost:3001/login', requestOptions)
+      fetch('https://messaging-app-server.azurewebsites.net/login', requestOptions)
           .then(response => response.json())
           .then((response) => {
             if(response != null && response.loginSuccessful){

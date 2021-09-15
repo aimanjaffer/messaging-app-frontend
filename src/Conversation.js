@@ -9,7 +9,7 @@ function Conversation(props) {
     
     const onAddMessage =  (newMessageId) => {
       let newMessage = {};
-      fetch(`http://localhost:3001/messages/id/${newMessageId}`)
+      fetch(`https://messaging-app-server.azurewebsites.net/messages/id/${newMessageId}`)
           .then((response) => response.json())
           .then((response) => {
             newMessage = response;
@@ -23,7 +23,7 @@ function Conversation(props) {
     //If newNotification.conversationId === conversationId, fetch the last message by newNotification.messageId 
     useEffect(()=>{
       if((typeof conversationId !== "undefined") && props.newNotification.conversationId === conversationId){
-        fetch(`http://localhost:3001/messages/id/${props.newNotification.messageId}`)
+        fetch(`https://messaging-app-server.azurewebsites.net/messages/id/${props.newNotification.messageId}`)
           .then((response) => response.json())
           .then((response) => {
             setMessageList((prevMessageList) => [...prevMessageList, response]);
@@ -38,7 +38,7 @@ function Conversation(props) {
     //GET All messages that are a part of this conversation
     useEffect(() => {
       if(conversationId !== null && (typeof conversationId !== "undefined") && Object.entries(conversationId).length !== 0){
-        fetch(`http://localhost:3001/messages/${conversationId}`)
+        fetch(`https://messaging-app-server.azurewebsites.net/messages/${conversationId}`)
           .then((response) => response.json())
           .then(setMessageList);
       }
