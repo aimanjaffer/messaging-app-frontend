@@ -117,7 +117,7 @@ function HomeComponent(props) {
         reloadConversationSummary={back}/></Row>
         </>) : 
         (<>
-        <Row><Button variant="success" onClick={showContactsList}>New</Button></Row>
+        <Row><Button variant="success" onClick={showContactsList}>New Chat</Button></Row>
         <Row><ConversationSummaryList user={user} 
         list={conversationSummaryList} 
         callbackOnClickConversation={loadConversation} 
