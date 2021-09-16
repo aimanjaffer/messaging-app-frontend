@@ -1,15 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { FormGroup } from "react-bootstrap";
 function LoginComponent(props) {
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm();  
+    const { register, handleSubmit, setError, formState: { errors }, getValues } = useForm();  
         
     const formSubmissionHandler = (e) => {
-      let userName = getValues('usernameField').toLowerCase();
+      let userName = getValues('usernameField').toLowerCase();//TODO: Do this check in backend instead
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -20,26 +19,38 @@ function LoginComponent(props) {
           .then((response) => {
             if(response != null && response.loginSuccessful){
                 props.callback(userName, response.loginSuccessful);
+            }else{
+              setError("usernameField", {
+                type: "loginFailed",
+                message: "Login Failed! Username is not valid",
+              });
             }  
           });    
     }
     
     return (
-      <Container className="align-items-center border">
-        
-      <form onSubmit={handleSubmit(formSubmissionHandler)}>
-      <Row>
-        <Col><label htmlFor="usernameField">Sign-in with your username:</label></Col>
-        <Col><Form.Control type="text" {...register("usernameField", { required: true, pattern: /^[A-Za-z0-9_.]+$/i })} /></Col>
-        <Col><Button variant="primary" type="submit" >Sign-in</Button></Col>
-      </Row>
-      <Row>
-        {errors.usernameField?.type ==='required' && <span>This field is required</span>}
-        {errors.usernameField?.type ==='pattern' && <span>No special characters allowed in username</span>}
-      </Row>
-      </form>
       
-      </Container>
+        
+      <Form noValidate onSubmit={handleSubmit(formSubmissionHandler)}>
+      <Row className="my-2">
+        <FormGroup>
+          <label htmlFor="usernameField">Sign-in with your username:</label>
+        <Form.Control isInvalid={errors.usernameField} type="text" {...register("usernameField", { required: true, pattern: /^[A-Za-z0-9_.]+$/i })} />
+        <Form.Control.Feedback type="invalid">
+          {errors.usernameField?.type ==='required' && "Username is required"}
+          {errors.usernameField?.type ==='pattern' && "No special characters allowed in Username"}
+          {errors.usernameField?.type ==='loginFailed' && errors.usernameField?.message}
+        </Form.Control.Feedback>
+        </FormGroup>
+        </Row>
+        <Row className="my-2">
+        <FormGroup>
+        <Button variant="primary" type="submit" >Sign-in</Button>
+        </FormGroup>
+      </Row>
+      </Form>
+      
+     
     );
   }
   export default LoginComponent;
