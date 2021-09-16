@@ -9,7 +9,7 @@ function LoginComponent(props) {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();  
         
     const formSubmissionHandler = (e) => {
-      let userName = getValues('usernameField');
+      let userName = getValues('usernameField').toLowerCase();
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
