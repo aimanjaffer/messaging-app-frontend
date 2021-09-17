@@ -8,7 +8,7 @@ function LoginComponent(props) {
     const { register, handleSubmit, setError, formState: { errors }, getValues } = useForm();  
         
     const formSubmissionHandler = (e) => {
-      let userName = getValues('usernameField').toLowerCase();//TODO: Do this check in backend instead
+      let userName = getValues('usernameField');//TODO: Do this check in backend instead
       let password = getValues('passwordField');
       const requestOptions = {
         method: 'POST',
