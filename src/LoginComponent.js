@@ -9,10 +9,11 @@ function LoginComponent(props) {
         
     const formSubmissionHandler = (e) => {
       let userName = getValues('usernameField').toLowerCase();//TODO: Do this check in backend instead
+      let password = getValues('passwordField');
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userName: userName})
+        body: JSON.stringify({ userName: userName, password: password})
       };
       fetch('https://messaging-app-server.azurewebsites.net/login', requestOptions)
           .then(response => response.json())
@@ -22,7 +23,7 @@ function LoginComponent(props) {
             }else{
               setError("usernameField", {
                 type: "loginFailed",
-                message: "Login Failed! Username is not valid",
+                message: "Login Failed! Username/Password is incorrect",
               });
             }  
           });    
@@ -39,7 +40,12 @@ function LoginComponent(props) {
         <Form.Control.Feedback type="invalid">
           {errors.usernameField?.type ==='required' && "Username is required"}
           {errors.usernameField?.type ==='pattern' && "No special characters allowed in Username"}
+        </Form.Control.Feedback>
+        <label htmlFor="passwordField">Password:</label>
+        <Form.Control isInvalid={errors.passwordField} type="password" {...register("passwordField", { required: true })} />
+        <Form.Control.Feedback type="invalid">
           {errors.usernameField?.type ==='loginFailed' && errors.usernameField?.message}
+          {errors.passwordField?.type ==='required' && "Password is required"}
         </Form.Control.Feedback>
         </FormGroup>
         </Row>
