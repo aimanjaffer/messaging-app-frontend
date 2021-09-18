@@ -29,9 +29,7 @@ function LoginComponent(props) {
           });    
     }
     
-    return (
-      
-        
+    return (        
       <Form noValidate onSubmit={handleSubmit(formSubmissionHandler)}>
       <Row className="my-2">
         <FormGroup>
@@ -54,9 +52,7 @@ function LoginComponent(props) {
         <Button variant="primary" type="submit" >Sign-in</Button>
         </FormGroup>
       </Row>
-      </Form>
-      
-     
+      </Form>    
     );
   }
   export default LoginComponent;

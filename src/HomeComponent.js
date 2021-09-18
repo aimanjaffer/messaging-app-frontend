@@ -5,6 +5,8 @@ import Container from 'react-bootstrap/Container';
 import ConversationSummaryList from './ConversationSummaryList';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import './HomeComponent.css';
 import React, { useState, useEffect, useRef } from "react";
 function HomeComponent(props) {
@@ -105,7 +107,24 @@ function HomeComponent(props) {
         //console.log("back button clicked");
         setContactsListVisible(false);
     };
-    return (
+    
+    return (<>
+        <Navbar bg="dark" variant="dark">
+        <Container>
+            <Navbar.Brand>Whaddup Messenger</Navbar.Brand>
+            <Navbar.Toggle />
+            <Navbar.Collapse className="justify-content-end">
+            <Nav.Item>
+            <Navbar.Text>
+                Signed in as: {user.userName}
+            </Navbar.Text>
+            </Nav.Item>
+            <Nav.Item className="px-5">
+                <Button variant="danger" onClick={props.logoutCallback}>Logout</Button>
+            </Nav.Item>
+            </Navbar.Collapse>
+        </Container>
+        </Navbar>
     <Container className="border border-2">
     <Row>
     <Col className="col-md-2">
@@ -136,6 +155,7 @@ function HomeComponent(props) {
     </Col>
     </Row>
     </Container>
+    </>
     );
   }
 export default HomeComponent;

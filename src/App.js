@@ -25,9 +25,13 @@ function App() {
       setSignUpSuccess(true);
     }
   }
+  function logout(){
+    setUserLoggedIn(false);
+    setUsername('');
+  }
   return (
     <>
-    {isUserLoggedIn? <HomeComponent loggedInUser={username}/> : 
+    {isUserLoggedIn? <HomeComponent logoutCallback ={logout} loggedInUser={username}/> : 
     <Container className="align-items-center border">
     <LoginComponent callback={callbackOnLoginSubmission}/>
     <Row className="my-5">
