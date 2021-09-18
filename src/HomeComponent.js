@@ -109,6 +109,9 @@ function HomeComponent(props) {
     };
     
     return (<>
+        
+    <Container className="border border-2">
+        <Row>
         <Navbar bg="dark" variant="dark">
         <Container>
             <Navbar.Brand>Whaddup Messenger</Navbar.Brand>
@@ -125,7 +128,7 @@ function HomeComponent(props) {
             </Navbar.Collapse>
         </Container>
         </Navbar>
-    <Container className="border border-2">
+        </Row>
     <Row>
     <Col className="col-md-2">
         {contactsListVisible ? (<>
